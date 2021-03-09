@@ -1,11 +1,12 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import { v4 as uuid } from 'uuid'
 import Header from './Header'
 import InputTodo from './InputTodo'
 import TodosList from './TodosList'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const TodoContainer = () => {
-    const [todos, setTodos] = useState([
+    const [todos, setTodos] = useLocalStorage('todos', [
         { id: uuid(), title: 'good', done: false },
         { id: uuid(), title: 'bad', done: true },
         { id: uuid(), title: 'neutral', done: false },
