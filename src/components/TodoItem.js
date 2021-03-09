@@ -1,7 +1,10 @@
-import { React, useState } from 'react'
+import { React, useRef, useState } from 'react'
 import styles from './TodoItem.module.css'
+import useOutsideClick from '../hooks/useOutsideClick'
 
 const TodoItem = (props) => {
+    const ref = useRef();
+
     const { id, title, done } = props.todo;
     const [editing, setEditing] = useState(false);
     const [newTitle, setNewTitle] = useState(title)
@@ -11,6 +14,13 @@ const TodoItem = (props) => {
         opacity: 0.4,
         textDecoration: "line-through",
     }
+
+    useOutsideClick(ref, () => {
+        if (editing) {
+            setNewTitle(title);
+            setEditing(false);
+        }
+    });
 
     const handleEditing = () => {
         setEditing(true);
@@ -49,6 +59,7 @@ const TodoItem = (props) => {
                 </span>
             </div>
             <input
+                ref={ref}
                 type="text"
                 style={editMode}
                 className={styles.textInput}
