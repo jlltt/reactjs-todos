@@ -1,4 +1,5 @@
-import { React, useRef, useState } from 'react'
+import { React, useRef, useState, useEffect } from 'react'
+import { FaTrash } from 'react-icons/fa'
 import styles from './TodoItem.module.css'
 import useOutsideClick from '../hooks/useOutsideClick'
 
@@ -14,6 +15,12 @@ const TodoItem = (props) => {
         opacity: 0.4,
         textDecoration: "line-through",
     }
+
+    useEffect(() => {
+        if (editing) {
+            ref.current.focus();
+        }
+    })
 
     useOutsideClick(ref, () => {
         if (editing) {
@@ -51,15 +58,16 @@ const TodoItem = (props) => {
                     checked={done}
                     onChange={() => props.handleChangeProps(id)}
                 />
-                <button
-                    onClick={() => props.deleteTodoProps(id)}
-                >Delete</button>
+                <button onClick={() => props.deleteTodoProps(id)}>
+                    <FaTrash />
+                </button>
                 <span style={done ? completedStyle : null}>
                     {title}
                 </span>
             </div>
             <input
                 ref={ref}
+                name="titleInput"
                 type="text"
                 style={editMode}
                 className={styles.textInput}
