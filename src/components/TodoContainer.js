@@ -7,6 +7,7 @@ import TodosList from './TodosList'
 import useLocalStorage from '../hooks/useLocalStorage'
 import About from '../pages/About'
 import NotMatch from '../pages/NoMatch'
+import Navbar from './Navbar'
 
 const TodoContainer = () => {
     const [todos, setTodos] = useLocalStorage('todos', [
@@ -53,30 +54,33 @@ const TodoContainer = () => {
     }
 
     return (
-        <Switch>
-            <Route exact path='/'>
-                <div className="container">
-                    <div className="inner">
-                        <Header />
-                        <InputTodo
-                            addTodoProps={addTodo}
-                        />
-                        <TodosList
-                            todos={todos}
-                            handleChangeProps={handleChange}
-                            deleteTodoProps={delTodo}
-                            setUpdate={setUpdate}
-                        />
-                    </div>
-                </div >
-            </Route>
-            <Route path='/about'>
-                <About />
-            </Route>
-            <Route path='*'>
-                <NotMatch />
-            </Route>
-        </Switch>
+        <>
+            <Navbar />
+            <Switch>
+                <Route exact path='/'>
+                    <div className="container">
+                        <div className="inner">
+                            <Header />
+                            <InputTodo
+                                addTodoProps={addTodo}
+                            />
+                            <TodosList
+                                todos={todos}
+                                handleChangeProps={handleChange}
+                                deleteTodoProps={delTodo}
+                                setUpdate={setUpdate}
+                            />
+                        </div>
+                    </div >
+                </Route>
+                <Route path='/about'>
+                    <About />
+                </Route>
+                <Route path='*'>
+                    <NotMatch />
+                </Route>
+            </Switch>
+        </>
     )
 }
 
